@@ -4,6 +4,7 @@ import { Switch, Route, Link, Redirect } from 'react-router-dom'
 const LoginComponent = React.lazy(() => import('./views/login/index'))
 const RegisterComponent = React.lazy(() => import('./views/register/index'))
 const MainComponent = React.lazy(() => import('./views/main/index'))
+const ErrorComponent = React.lazy(() => import('./views/error/index'))
 
 
 function App() {
@@ -36,6 +37,11 @@ function App() {
             exact 
             path="/" 
             component={MainComponent} 
+          />
+          <Route
+            exact 
+            path="/*" 
+            component={ErrorComponent} 
           />
         </Switch>
       </Suspense>
