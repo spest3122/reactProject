@@ -8,7 +8,7 @@ const Register = () => {
     }
     return (
         <div className="h-full flex justify-center items-center	">
-            <div className="w-full max-w-sm">
+            <div className="w-full max-w-md">
                 <form className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4">
                     <div className="flex justify-center text-lg mb-6">
                         <h2>註冊</h2>
@@ -18,24 +18,40 @@ const Register = () => {
                             <span className="text-red-500">*</span>
                             帳號
                         </label>
-                        <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
-                        <p className="absolute -bottom-5 left-20 text-red-500 text-xs ">請輸入帳號</p>
+                        <input 
+                            className="shadow text-sm appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                            id="username" 
+                            type="text"
+                            placeholder="必須是信箱"
+                        />
+                        <p className="absolute -bottom-5 ml-3 left-20 text-red-500 text-xs ">請輸入帳號</p>
                     </div>
                     <div className="mb-6 flex items-center relative">
                         <label className="block w-24 text-gray-700 text-sm font-bold mr-2" for="password">
                             <span className="text-red-500">*</span>
                             密碼
                         </label>
-                        <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" />
-                        <p className="absolute -bottom-5 left-20 text-red-500 text-xs ">請輸入密碼</p>
+                        <input 
+                            className="shadow appearance-none text-sm border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                            id="password" 
+                            type="password"
+                            placeholder="4-8字元；首尾必須是英文；中間必須是數字"
+                        />
+                        <p className="absolute ml-3 -bottom-5 left-20 text-red-500 text-xs ">請輸入密碼</p>
                     </div>
                     <div className="mb-6 flex items-center relative">
-                        <label className="block w-24 text-gray-700 text-sm font-bold mr-2" for="password">
+                        <label className="block w-24 text-gray-700 text-sm font-bold mr-2" for="confirmPassword">
                             <span className="text-red-500">*</span>
                             確認密碼
                         </label>
-                        <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" />
-                        <p className="absolute -bottom-5 left-20 text-red-500 text-xs ">請輸入密碼</p>
+                        <input 
+                            className="shadow text-sm appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                            id="confirmPassword" 
+                            type="password" 
+                            placeholder="4-8字元；首尾必須是英文；中間必須是數字"
+                        />
+                        <p className="absolute -bottom-5 left-20 ml-3 text-red-500 text-xs ">請輸入確認密碼</p>
+                        <p className="absolute -bottom-10 left-20 ml-3 text-red-500 text-xs ">與密碼不同</p>
                     </div>
                     <div className="flex justify-center mb-4">
                         <button 

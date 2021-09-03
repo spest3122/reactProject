@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import './App.css'
-import { Switch, Route, Link, Redirect } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 const LoginComponent = React.lazy(() => import('./views/login/index'))
 const RegisterComponent = React.lazy(() => import('./views/register/index'))
 const MainComponent = React.lazy(() => import('./views/main/index'))
@@ -24,23 +24,19 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route 
-            exact 
             path="/login" 
             component={LoginComponent} 
           />
           <Route 
-            exact 
             path="/register" 
             component={RegisterComponent} 
           />
           <Route
-            exact 
-            path="/" 
+            path="/"
             component={MainComponent} 
           />
-          <Route
-            exact 
-            path="/*" 
+          <Route 
+            path="*" 
             component={ErrorComponent} 
           />
         </Switch>
