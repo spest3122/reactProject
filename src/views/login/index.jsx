@@ -4,22 +4,32 @@ import axios from 'axios'
 
 const Login = () => {
     const history = useHistory();
-    const [acc, setAcc] = useState({value: '', tip: false})
-    const [psd, setPsd] = useState({value: '', tip: false})
+    const [loginForm, setLoginForm] = useState({
+        username: '',
+        userErrTip: false,
+        password: '',
+        psdErrTip: false,
+    })
     
-
+    // 驗證登入表單
     const verifyLoginForm = () => {
-        if(acc.value === ''){
-            setAcc(prev => ({ ...prev, tip: true}))
+        let userErrTip = false;
+        let psdErrTip = false;
+        if(loginForm.username === ''){
+            userErrTip = true;
         }
 
-        if(psd.value === ''){
-            setPsd(prev => ({ ...prev, tip: true}))
+        if(loginForm.password === ''){
+            psdErrTip = true
         }
-        return false
+        if(!userErrTip && !psdErrTip){
+            return false
+        }
+        setLoginForm(prev => ({...prev, userErrTip: userErrTip, psdErrTip: psdErrTip}))
+        return true
     }
 
-    // 提交登入
+    // 提交登入表單
     const doSubmit = async () => {
         if(verifyLoginForm()){
             return;
@@ -27,7 +37,7 @@ const Login = () => {
         try {
             let res = 
                 await 
-                axios.post('/api/login', { username: acc.value, password: psd.value })
+                axios.post('/api/login', { username: loginForm.username, password: loginForm.password })
                 .then((res)=>{
                     console.log(res)
                 })
@@ -53,13 +63,13 @@ const Login = () => {
                             帳號
                         </label>
                         <input 
-                            className={`shadow appearance-none border ${acc.tip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
+                            className={`shadow appearance-none border ${loginForm.userErrTip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
                             id="username" 
                             type="text"
-                            value={acc.value}
-                            onChange={(e) => setAcc(prev => ({ ...prev, value: e.target.value}))}
+                            value={loginForm.username}
+                            onChange={(e) => setLoginForm(prev => ({ ...prev, username: e.target.value}))}
                         />
-                        {acc.tip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs ">請輸入帳號</p>) : null}
+                        {loginForm.userErrTip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs ">請輸入帳號</p>) : null}
                         
                     </div>
                     <div className="mb-6 flex items-center relative">
@@ -67,13 +77,13 @@ const Login = () => {
                             密碼
                         </label>
                         <input 
-                            className={`shadow appearance-none border ${psd.tip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
+                            className={`shadow appearance-none border ${loginForm.psdErrTip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
                             id="password" 
                             type="password"
-                            value={psd.value}
-                            onChange={(e) => setPsd(prev => ({ ...prev, value: e.target.value}))}
+                            value={loginForm.password}
+                            onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value}))}
                         />
-                        {psd.tip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs">請輸入密碼</p>) : null}
+                        {loginForm.psdErrTip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs">請輸入密碼</p>) : null}
                     </div>
                     <div className="flex justify-center mb-4">
                         <button 
