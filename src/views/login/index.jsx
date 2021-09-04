@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
+import Toast from '../tip'
+import Captcha from './captcha'
 
 const Login = () => {
     const history = useHistory();
@@ -10,6 +12,7 @@ const Login = () => {
         password: '',
         psdErrTip: false,
     })
+    const [toastStatus, setToastStatus] = useState({ msg: '',status: false, color: ''})
     
     // 驗證登入表單
     const verifyLoginForm = () => {
@@ -34,16 +37,29 @@ const Login = () => {
         if(verifyLoginForm()){
             return;
         }
-        try {
-            let res = 
-                await 
-                axios.post('/api/login', { username: loginForm.username, password: loginForm.password })
-                .then((res)=>{
-                    console.log(res)
-                })
-        } catch(e) {
-            console.log(e);
-        }
+        let res = await 
+            axios.post(
+                '/api/login',
+                { username: loginForm.username, password: loginForm.password }, 
+            )
+            .then((res)=>{
+                console.log(res, 8888)
+            })
+            .catch((error) => {
+                const { 
+                    response: {
+                        data
+                    }
+                } = error
+                if(!data.success){
+                    setToastStatus(prev => ({
+                        ...prev, 
+                        msg: data.message, 
+                        status: true,
+                        color: 'fail'
+                    }))
+                }
+            })
     }
 
     // 跳轉註冊頁
@@ -105,6 +121,8 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+            {/* {toastStatus.status ? (<Toast status={toastStatus.color} msg={toastStatus.msg} />) : null} */}
+            <Captcha />
         </div>
     )
 }

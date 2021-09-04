@@ -19,8 +19,5 @@
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.9",
     "vite": "^2.5.2"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
