@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import Toast from '../tip'
 import Captcha from './captcha'
+import eyeOpen from '../../../assets/image/open.png'
+import eyeClose from '../../../assets/image/close.png'
 
 //Toast 不會重複出現
 
@@ -14,6 +16,7 @@ const Login = () => {
         password: '',
         psdErrTip: false,
     })
+    const [pwdOpen, setPwdOpen] = useState(false)
     const [toastStatus, setToastStatus] = useState({ msg: '',status: false, color: ''})
     const [captchaStatus, setCaptchaStatus] = useState(0) //0未驗證 1驗證中/驗證不過 2驗證通過    
     const captchaVerifyMethod = val => {
@@ -105,13 +108,21 @@ const Login = () => {
                         <label className="block w-10 text-gray-700 text-sm font-bold mr-2" for="password">
                             密碼
                         </label>
-                        <input 
-                            className={`shadow appearance-none border ${loginForm.psdErrTip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
-                            id="password" 
-                            type="password"
-                            value={loginForm.password}
-                            onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value}))}
-                        />
+                        <div className="relative w-full">
+                            <input 
+                                className={`shadow appearance-none border ${loginForm.psdErrTip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
+                                id="password" 
+                                type={pwdOpen ? 'text' : 'password'}
+                                value={loginForm.password}
+                                onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value}))}
+                            />
+                            <div 
+                                className="icon w-6 h-6 absolute right-1.5 top-1.5"
+                                onClick={() => setPwdOpen(prev => !prev)}
+                            >
+                                <img src={pwdOpen ? eyeOpen : eyeClose}/>
+                            </div>
+                        </div>
                         {loginForm.psdErrTip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs">請輸入密碼</p>) : null}
                     </div>
                     <div className="flex justify-center mb-4">
