@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react'
 let delay = 2
 const Toast = props => {
     let { status, msg } = props
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(false)
     useEffect(()=>{
+        setShow(true)
         let showDialog = setTimeout(()=> setShow(false), delay*1000)
         return () => {
             clearTimeout(showDialog)
         }
-    }, [])
+    }, [status])
     
     const matchColor = (color) => {
         switch(color) {
@@ -22,12 +23,12 @@ const Toast = props => {
         }
     }
 
-    return (show ? 
-        (<div className="fixed z-10 top-3 max-w-md flex items-center p-3 rounded-full border-2">
+    return(
+        <div className={`fixed z-10 top-3 max-w-md items-center flex p-3 rounded-full border-2 ${show ? '' : 'hidden'}`}>
             <div className={`${matchColor(status)} w-14 h-14 rounded-full`}></div>
             <p className="ml-2">{msg}</p>
-        </div>)
-    : null)
+        </div>
+    )
 }
 
 export default Toast;

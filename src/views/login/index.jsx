@@ -4,6 +4,8 @@ import axios from 'axios'
 import Toast from '../tip'
 import Captcha from './captcha'
 
+//Toast 不會重複出現
+
 const Login = () => {
     const history = useHistory();
     const [loginForm, setLoginForm] = useState({
@@ -13,7 +15,12 @@ const Login = () => {
         psdErrTip: false,
     })
     const [toastStatus, setToastStatus] = useState({ msg: '',status: false, color: ''})
-    
+    const [captchaStatus, setCaptchaStatus] = useState(0) //0未驗證 1驗證中/驗證不過 2驗證通過    
+    const captchaVerifyMethod = val => {
+        setToastStatus(prev => ({...prev, msg: '驗證通過', status: true, color: 'success'}))
+        setCaptchaStatus(2)
+    }
+
     // 驗證登入表單
     const verifyLoginForm = () => {
         let userErrTip = false;
@@ -34,6 +41,11 @@ const Login = () => {
 
     // 提交登入表單
     const doSubmit = async () => {
+        if(captchaStatus === 0){
+            setCaptchaStatus(1)
+            return;
+        }
+        
         if(verifyLoginForm()){
             return;
         }
@@ -58,6 +70,7 @@ const Login = () => {
                         status: true,
                         color: 'fail'
                     }))
+                    console.log(123)
                 }
             })
     }
@@ -121,8 +134,8 @@ const Login = () => {
                     </div>
                 </form>
             </div>
-            {/* {toastStatus.status ? (<Toast status={toastStatus.color} msg={toastStatus.msg} />) : null} */}
-            <Captcha />
+            <Toast status={toastStatus.color} msg={toastStatus.msg} />
+            {captchaStatus === 1 ? <Captcha endVerify={captchaVerifyMethod} /> : ''}
         </div>
     )
 }

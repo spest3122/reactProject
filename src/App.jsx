@@ -5,12 +5,17 @@ const LoginComponent = React.lazy(() => import('./views/login/index'))
 const RegisterComponent = React.lazy(() => import('./views/register/index'))
 const MainComponent = React.lazy(() => import('./views/main/index'))
 const ErrorComponent = React.lazy(() => import('./views/error/index'))
+const NewsComponent = React.lazy(() => import('./views/main/news'))
+const SubMainComponent = React.lazy(() => import('./views/main/subMain'))
 
 
 function App() {
   return (
     <div className="h-screen">
       <ul>
+        <li>
+          <Link to="/news"></Link>
+        </li>
         <li>
           <Link to="/login"></Link>
         </li>
@@ -20,9 +25,27 @@ function App() {
         <li>
           <Link to="/"></Link>
         </li>
+        
       </ul>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
+          <Route
+            exact
+            path="/"
+            component={() => 
+              <MainComponent>
+                <SubMainComponent />
+              </MainComponent>
+            }
+          />
+          <Route 
+            path="/news"
+            component={() => 
+              <MainComponent>
+                <NewsComponent />
+              </MainComponent>
+            }
+          />
           <Route 
             path="/login" 
             component={LoginComponent} 
@@ -31,10 +54,7 @@ function App() {
             path="/register" 
             component={RegisterComponent} 
           />
-          <Route
-            path="/"
-            component={MainComponent} 
-          />
+
           <Route 
             path="*" 
             component={ErrorComponent} 

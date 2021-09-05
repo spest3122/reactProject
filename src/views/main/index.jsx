@@ -1,10 +1,7 @@
-import React, { Suspense } from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
-const NewsComponent = React.lazy(() => import('./news/index'))
-const SubMainComponent = React.lazy(() => import('./subMain/index'))
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-
-const Main = () => {
+const Main = props => {
     return (
         <main className="flex flex-col">
             <header className="flex justify-between items-center w-full h-11 shadow border-b-2 border-black border-opacity-40 px-4">
@@ -23,18 +20,7 @@ const Main = () => {
                 </div>
             </header>
             <main className="w-full h-full p-4">
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Switch>
-                        <Route 
-                            path={'/'}
-                            component={SubMainComponent} 
-                        />
-                        <Route 
-                            path={'/news'}
-                            component={NewsComponent} 
-                        />
-                    </Switch>
-                </Suspense>
+                {props.children}
             </main>
         </main>
     )
