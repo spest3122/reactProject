@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react'
 import './App.css'
 import { Switch, Route, Link } from 'react-router-dom'
+import NewsComponent from './views/main/news'
+import SubMainComponent from './views/main/subMain'
+
 const LoginComponent = React.lazy(() => import('./views/login/index'))
 const RegisterComponent = React.lazy(() => import('./views/register/index'))
 const MainComponent = React.lazy(() => import('./views/main/index'))
 const ErrorComponent = React.lazy(() => import('./views/error/index'))
-const NewsComponent = React.lazy(() => import('./views/main/news'))
-const SubMainComponent = React.lazy(() => import('./views/main/subMain'))
 
 
 function App() {
