@@ -13,7 +13,7 @@ const doLogin = (data) => {
 }
 
 //註冊
-const doRegister = () => {
+const doRegister = (data) => {
     return helper({
         url: '/api/register',
         data: data,
@@ -26,8 +26,8 @@ const doRegister = () => {
 const doAuth = () => {
     return helper({
         url: '/api/authentication',
-        data: data,
-        method: 'post',
+        data: {},
+        method: 'get',
         headers: {
             AUTHENTICATION_TOKEN: localStorage.getItem('AUTHENTICATION_TOKEN') || null
         },

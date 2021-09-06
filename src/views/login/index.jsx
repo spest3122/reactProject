@@ -10,6 +10,7 @@ import eyeClose from '../../../assets/image/close.png'
 
 const Login = () => {
     const history = useHistory();
+    console.log(history)
     const [loginForm, setLoginForm] = useState({
         username: '',
         userErrTip: false,
@@ -65,6 +66,9 @@ const Login = () => {
                 color: 'fail'
             }))
             return;
+        } else {
+            localStorage.setItem('AUTHENTICATION_TOKEN', res.data.token)
+            history.replace('/')
         }
     }
 

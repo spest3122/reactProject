@@ -1,7 +1,20 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { doAuth } from '../../api'
 
 const Main = props => {
+    const history = useHistory();
+    useEffect(() => {
+        async function callAuthWhenRefresh(){
+            let res = await doAuth();
+            if(!res.data.success){
+                localStorage.clear()
+                history.replace('/login')
+            }
+        }
+        callAuthWhenRefresh()
+        return () => {}
+    }, [])
     return (
         <main className="flex flex-col">
             <header className="flex justify-between items-center w-full h-11 shadow border-b-2 border-black border-opacity-40 px-4">
