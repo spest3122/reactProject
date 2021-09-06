@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios'
-import Toast from '../tip'
+import { doLogin } from '../../api/'
+import Toast from '../toast'
 import Captcha from './captcha'
 import eyeOpen from '../../../assets/image/open.png'
 import eyeClose from '../../../assets/image/close.png'
@@ -20,8 +20,12 @@ const Login = () => {
     const [toastStatus, setToastStatus] = useState({ msg: '',status: false, color: ''})
     const [captchaStatus, setCaptchaStatus] = useState(0) //0未驗證 1驗證中/驗證不過 2驗證通過    
     const captchaVerifyMethod = val => {
-        setToastStatus(prev => ({...prev, msg: '驗證通過', status: true, color: 'success'}))
-        setCaptchaStatus(2)
+        if(val === 2){
+            setToastStatus(prev => ({...prev, msg: '驗證通過', status: true, color: 'success'}))
+        }else if(val === 1){
+            setToastStatus(prev => ({...prev, msg: '驗證失敗，請重新驗證', status: true, color: 'fail'}))
+        }
+        setCaptchaStatus(val)
     }
 
     // 驗證登入表單
@@ -52,30 +56,16 @@ const Login = () => {
         if(verifyLoginForm()){
             return;
         }
-        let res = await 
-            axios.post(
-                '/api/login',
-                { username: loginForm.username, password: loginForm.password }, 
-            )
-            .then((res)=>{
-                console.log(res, 8888)
-            })
-            .catch((error) => {
-                const { 
-                    response: {
-                        data
-                    }
-                } = error
-                if(!data.success){
-                    setToastStatus(prev => ({
-                        ...prev, 
-                        msg: data.message, 
-                        status: true,
-                        color: 'fail'
-                    }))
-                    console.log(123)
-                }
-            })
+        let res = await doLogin({ username: loginForm.username, password: loginForm.password })
+        if(!res.data.success){
+            setToastStatus(prev => ({
+                ...prev, 
+                msg: res.data.message, 
+                status: true,
+                color: 'fail'
+            }))
+            return;
+        }
     }
 
     // 跳轉註冊頁

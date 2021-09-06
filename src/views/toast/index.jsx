@@ -24,7 +24,7 @@ const Toast = props => {
     }
 
     return(
-        <div className={`fixed z-10 top-3 max-w-md items-center flex p-3 rounded-full border-2 ${show ? '' : 'hidden'}`}>
+        <div className={`fixed z-20 top-3 max-w-md items-center flex p-3 rounded-full border-2 ${show ? 'visible' : 'invisible'}`}>
             <div className={`${matchColor(status)} w-14 h-14 rounded-full`}></div>
             <p className="ml-2">{msg}</p>
         </div>

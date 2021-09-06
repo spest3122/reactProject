@@ -49,8 +49,13 @@ const Captcha = props => {
                 return a - b
             }
         })
-        const isMatch = result.
-        endVerify(2)
+        const isMatch = result.every((item, index) => item === answer[index])
+        if(isMatch){
+            endVerify(2)
+        }else{
+            endVerify(1)
+            onRefresh()
+        }
     }
 
     useEffect(() => {
