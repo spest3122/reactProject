@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom'
 import { doLogin } from '../../api/'
 import Toast from '../toast'
 import Captcha from './captcha'
-import eyeOpen from '../../../assets/image/open.png'
-import eyeClose from '../../../assets/image/close.png'
+import eyeOpen from '/image/open.png'
+import eyeClose from '/image/close.png'
 
 //Toast 不會重複出現
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import eyeOpen from '../../../assets/image/open.png'
-import eyeClose from '../../../assets/image/close.png'
+import eyeOpen from '/image/open.png'
+import eyeClose from '/image/close.png'
 import { doRegister } from '../../api'
 
 const Register = () => {

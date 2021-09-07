@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './captcha.css'
-import recycle from '../../../../assets/image/recycle.png'
+import recycle from '/image/recycle.png'
 
 /**
  * 數字驗證碼
