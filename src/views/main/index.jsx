@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { doAuth } from '../../api'
+import { doAuth } from 'api'
 
 const Main = (props) => {
     const history = useHistory()
