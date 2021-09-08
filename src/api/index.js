@@ -25,12 +25,11 @@ const doRegister = (data) => {
 //驗證
 const doAuth = () => {
     return helper({
-        url: '/api/authentication',
+        url: '/api/user',
         data: {},
         method: 'get',
         headers: {
-            AUTHENTICATION_TOKEN:
-                localStorage.getItem('AUTHENTICATION_TOKEN') || null,
+            Authorization: localStorage.getItem('Authorization') || null,
         },
     })
 }

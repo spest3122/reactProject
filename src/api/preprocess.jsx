@@ -6,9 +6,11 @@ import axios from 'axios'
  * 2. 錯誤能直接返回提示的component
  */
 
+const outerUrl = 'https://l8-upgrade-apis.vercel.app'
+
 const helper = ({ url = '', headers = {}, data = {}, method = 'get' }) => {
     return axios({
-        url: url,
+        url: outerUrl + url,
         method: method,
         data: data,
         headers: { ...headers },
