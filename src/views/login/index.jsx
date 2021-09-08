@@ -9,7 +9,7 @@ import eyeClose from '/image/close.png'
 //Toast 不會重複出現
 
 const Login = () => {
-    const history = useHistory();
+    const history = useHistory()
     console.log(history)
     const [loginForm, setLoginForm] = useState({
         username: '',
@@ -18,54 +18,75 @@ const Login = () => {
         psdErrTip: false,
     })
     const [pwdOpen, setPwdOpen] = useState(false)
-    const [toastStatus, setToastStatus] = useState({ msg: '',status: false, color: ''})
-    const [captchaStatus, setCaptchaStatus] = useState(0) //0未驗證 1驗證中/驗證不過 2驗證通過    
-    const captchaVerifyMethod = val => {
-        if(val === 2){
-            setToastStatus(prev => ({...prev, msg: '驗證通過', status: true, color: 'success'}))
-        }else if(val === 1){
-            setToastStatus(prev => ({...prev, msg: '驗證失敗，請重新驗證', status: true, color: 'fail'}))
+    const [toastStatus, setToastStatus] = useState({
+        msg: '',
+        status: false,
+        color: '',
+    })
+    const [captchaStatus, setCaptchaStatus] = useState(0) //0未驗證 1驗證中/驗證不過 2驗證通過
+    const captchaVerifyMethod = (val) => {
+        if (val === 2) {
+            setToastStatus((prev) => ({
+                ...prev,
+                msg: '驗證通過',
+                status: true,
+                color: 'success',
+            }))
+        } else if (val === 1) {
+            setToastStatus((prev) => ({
+                ...prev,
+                msg: '驗證失敗，請重新驗證',
+                status: true,
+                color: 'fail',
+            }))
         }
         setCaptchaStatus(val)
     }
 
     // 驗證登入表單
     const verifyLoginForm = () => {
-        let userErrTip = false;
-        let psdErrTip = false;
-        if(loginForm.username === ''){
-            userErrTip = true;
+        let userErrTip = false
+        let psdErrTip = false
+        if (loginForm.username === '') {
+            userErrTip = true
         }
 
-        if(loginForm.password === ''){
+        if (loginForm.password === '') {
             psdErrTip = true
         }
-        if(!userErrTip && !psdErrTip){
+        if (!userErrTip && !psdErrTip) {
             return false
         }
-        setLoginForm(prev => ({...prev, userErrTip: userErrTip, psdErrTip: psdErrTip}))
+        setLoginForm((prev) => ({
+            ...prev,
+            userErrTip: userErrTip,
+            psdErrTip: psdErrTip,
+        }))
         return true
     }
 
     // 提交登入表單
     const doSubmit = async () => {
-        if(captchaStatus === 0){
+        if (captchaStatus === 0) {
             setCaptchaStatus(1)
-            return;
+            return
         }
-        
-        if(verifyLoginForm()){
-            return;
+
+        if (verifyLoginForm()) {
+            return
         }
-        let res = await doLogin({ username: loginForm.username, password: loginForm.password })
-        if(!res.data.success){
-            setToastStatus(prev => ({
-                ...prev, 
-                msg: res.data.message, 
+        let res = await doLogin({
+            username: loginForm.username,
+            password: loginForm.password,
+        })
+        if (!res.data.success) {
+            setToastStatus((prev) => ({
+                ...prev,
+                msg: res.data.message,
                 status: true,
-                color: 'fail'
+                color: 'fail',
             }))
-            return;
+            return
         } else {
             localStorage.setItem('AUTHENTICATION_TOKEN', res.data.token)
             history.replace('/')
@@ -85,43 +106,70 @@ const Login = () => {
                         <h2>登入</h2>
                     </div>
                     <div className="mb-7 flex items-center relative">
-                        <label className="block w-10 text-gray-700 text-sm font-bold mr-2" for="username">
+                        <label
+                            className="block w-10 text-gray-700 text-sm font-bold mr-2"
+                            for="username"
+                        >
                             帳號
                         </label>
-                        <input 
-                            className={`shadow appearance-none border ${loginForm.userErrTip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
-                            id="username" 
+                        <input
+                            className={`shadow appearance-none border ${
+                                loginForm.userErrTip ? 'border-red-500' : ''
+                            } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                            id="username"
                             type="text"
                             value={loginForm.username}
-                            onChange={(e) => setLoginForm(prev => ({ ...prev, username: e.target.value}))}
+                            onChange={(e) =>
+                                setLoginForm((prev) => ({
+                                    ...prev,
+                                    username: e.target.value,
+                                }))
+                            }
                         />
-                        {loginForm.userErrTip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs ">請輸入帳號</p>) : null}
-                        
+                        {loginForm.userErrTip ? (
+                            <p className="absolute -bottom-6 left-12 text-red-500 text-xs ">
+                                請輸入帳號
+                            </p>
+                        ) : null}
                     </div>
                     <div className="mb-6 flex items-center relative">
-                        <label className="block w-10 text-gray-700 text-sm font-bold mr-2" for="password">
+                        <label
+                            className="block w-10 text-gray-700 text-sm font-bold mr-2"
+                            for="password"
+                        >
                             密碼
                         </label>
                         <div className="relative w-full">
-                            <input 
-                                className={`shadow appearance-none border ${loginForm.psdErrTip ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} 
-                                id="password" 
+                            <input
+                                className={`shadow appearance-none border ${
+                                    loginForm.psdErrTip ? 'border-red-500' : ''
+                                } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                                id="password"
                                 type={pwdOpen ? 'text' : 'password'}
                                 value={loginForm.password}
-                                onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value}))}
+                                onChange={(e) =>
+                                    setLoginForm((prev) => ({
+                                        ...prev,
+                                        password: e.target.value,
+                                    }))
+                                }
                             />
-                            <div 
+                            <div
                                 className="icon w-6 h-6 absolute right-1.5 top-1.5"
-                                onClick={() => setPwdOpen(prev => !prev)}
+                                onClick={() => setPwdOpen((prev) => !prev)}
                             >
-                                <img src={pwdOpen ? eyeOpen : eyeClose}/>
+                                <img src={pwdOpen ? eyeOpen : eyeClose} />
                             </div>
                         </div>
-                        {loginForm.psdErrTip ? (<p className="absolute -bottom-6 left-12 text-red-500 text-xs">請輸入密碼</p>) : null}
+                        {loginForm.psdErrTip ? (
+                            <p className="absolute -bottom-6 left-12 text-red-500 text-xs">
+                                請輸入密碼
+                            </p>
+                        ) : null}
                     </div>
                     <div className="flex justify-center mb-4">
-                        <button 
-                            className="text-blue-300 text-sm py-1 px-6 rounded focus:outline-none focus:shadow-outline" 
+                        <button
+                            className="text-blue-300 text-sm py-1 px-6 rounded focus:outline-none focus:shadow-outline"
                             type="button"
                             onClick={goToRegister}
                         >
@@ -129,8 +177,8 @@ const Login = () => {
                         </button>
                     </div>
                     <div className="flex justify-center">
-                        <button 
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-6 rounded focus:outline-none focus:shadow-outline" 
+                        <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-6 rounded focus:outline-none focus:shadow-outline"
                             type="button"
                             onClick={doSubmit}
                         >
@@ -140,7 +188,11 @@ const Login = () => {
                 </form>
             </div>
             <Toast status={toastStatus.color} msg={toastStatus.msg} />
-            {captchaStatus === 1 ? <Captcha endVerify={captchaVerifyMethod} /> : ''}
+            {captchaStatus === 1 ? (
+                <Captcha endVerify={captchaVerifyMethod} />
+            ) : (
+                ''
+            )}
         </div>
     )
 }

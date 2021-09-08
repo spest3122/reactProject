@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { doAuth } from '../../api'
 
-const Main = props => {
-    const history = useHistory();
+const Main = (props) => {
+    const history = useHistory()
     useEffect(() => {
-        async function callAuthWhenRefresh(){
-            let res = await doAuth();
-            if(!res.data.success){
+        async function callAuthWhenRefresh() {
+            let res = await doAuth()
+            if (!res.data.success) {
                 localStorage.clear()
                 history.replace('/login')
             }
@@ -32,9 +32,7 @@ const Main = props => {
                     </ul>
                 </div>
             </header>
-            <main className="w-full h-full p-4">
-                {props.children}
-            </main>
+            <main className="w-full h-full p-4">{props.children}</main>
         </main>
     )
 }

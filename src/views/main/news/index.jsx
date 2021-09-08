@@ -1,7 +1,5 @@
 const News = () => {
-    return (
-        <div>最新消息</div>
-    )
+    return <div>最新消息</div>
 }
 
 export default News

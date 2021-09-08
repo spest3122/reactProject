@@ -29,13 +29,10 @@ const doAuth = () => {
         data: {},
         method: 'get',
         headers: {
-            AUTHENTICATION_TOKEN: localStorage.getItem('AUTHENTICATION_TOKEN') || null
+            AUTHENTICATION_TOKEN:
+                localStorage.getItem('AUTHENTICATION_TOKEN') || null,
         },
     })
 }
 
-export {
-    doLogin,
-    doRegister,
-    doAuth
-}
+export { doLogin, doRegister, doAuth }

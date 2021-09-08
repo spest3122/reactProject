@@ -7,19 +7,19 @@ import Toast from '../views/toast'
  * 2. 錯誤能直接返回提示的component
  */
 
-const helper = ({url = '', headers = {}, data= {}, method = 'get' }) => {
+const helper = ({ url = '', headers = {}, data = {}, method = 'get' }) => {
     return axios({
         url: url,
         method: method,
         data: data,
-        headers: {...headers}
+        headers: { ...headers },
     })
-    .then(res => {
-        return res
-    })
-    .catch(error => {
-        return error.response
-    })
+        .then((res) => {
+            return res
+        })
+        .catch((error) => {
+            return error.response
+        })
 }
 
 export default helper
