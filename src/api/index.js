@@ -29,9 +29,52 @@ const doAuth = () => {
         data: {},
         method: 'get',
         headers: {
-            Authorization: localStorage.getItem('Authorization') || null,
+            Authorization: localStorage.getItem('Authorization'),
         },
     })
 }
 
-export { doLogin, doRegister, doAuth }
+//修改使用者名稱
+const updateUserName = () => {
+    return helper({
+        url: '/api/users',
+        data: {},
+        method: 'put',
+        headers: {
+            Authorization: localStorage.getItem('Authorization'),
+        },
+    })
+}
+
+//取得使用者名稱
+const getUserName = () => {
+    return helper({
+        url: '/api/users',
+        data: {},
+        method: 'get',
+        headers: {
+            Authorization: localStorage.getItem('Authorization'),
+        },
+    })
+}
+
+//上傳使用者圖片
+const uploadUserImage = () => {
+    return helper({
+        url: '/api/users/uploadBase64Picture',
+        data: {},
+        method: 'post',
+        headers: {
+            Authorization: localStorage.getItem('Authorization'),
+        },
+    })
+}
+
+export {
+    doLogin,
+    doRegister,
+    doAuth,
+    updateUserName,
+    getUserName,
+    uploadUserImage,
+}
