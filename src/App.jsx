@@ -1,13 +1,13 @@
-import React, { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 import './App.css'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import NewsComponent from './views/main/news'
 import SubMainComponent from './views/main/subMain'
 
-const LoginComponent = React.lazy(() => import('./views/login/index'))
-const RegisterComponent = React.lazy(() => import('./views/register/index'))
-const MainComponent = React.lazy(() => import('./views/main/index'))
-const ErrorComponent = React.lazy(() => import('./views/error/index'))
+const LoginComponent = lazy(() => import('./views/login/index'))
+const RegisterComponent = lazy(() => import('./views/register/index'))
+const MainComponent = lazy(() => import('./views/main/index'))
+const ErrorComponent = lazy(() => import('./views/error/index'))
 
 const ToLogin = () => (<Redirect to="/login" />)
 
