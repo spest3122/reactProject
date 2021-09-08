@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import './App.css'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import routes from '@/views/routes'
+import routes from '@/routes'
 
 const ToLogin = () => <Redirect to="/login" />
 
