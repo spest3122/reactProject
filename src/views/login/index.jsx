@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { doLogin } from 'api'
-import Toast from '@/views/toast'
-import Captcha from '@/views/login/captcha'
+import Toast from '@/components/toast'
+import Captcha from '@/components/login/captcha'
 import eyeOpen from '/image/open.png'
 import eyeClose from '/image/close.png'
 
