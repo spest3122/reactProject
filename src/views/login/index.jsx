@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { doLogin } from 'api'
 import Toast from '@/components/toast'
-import Captcha from '@/components/login/captcha'
+import Captcha from '@/views/login/captcha'
 import eyeOpen from '/image/open.png'
 import eyeClose from '/image/close.png'
 
@@ -87,13 +87,13 @@ const Login = () => {
             return
         } else {
             localStorage.setItem('AUTHENTICATION_TOKEN', res.data.token)
-            return <Redirect to='/' />
+            return <Redirect to="/" />
         }
     }
 
     // 跳轉註冊頁
     const goToRegister = () => {
-        return <Redirect to='/register' />
+        return <Redirect to="/register" />
     }
 
     return (

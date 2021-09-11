@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import NewsComponent from '@/views/main/news'
+import MemberComponent from '@/views/main/member'
 import SubMainComponent from '@/views/main/subMain'
 const LoginComponent = lazy(() => import('@/views/login'))
 const RegisterComponent = lazy(() => import('@/views/register'))
@@ -23,11 +23,11 @@ const privateRoutes = [
         ),
     },
     {
-        path: '/news',
+        path: '/member',
         needAuth: true,
         component: () => (
             <MainComponent>
-                <NewsComponent />
+                <MemberComponent />
             </MainComponent>
         ),
     },

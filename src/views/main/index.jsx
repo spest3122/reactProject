@@ -26,7 +26,7 @@ const Main = (props) => {
                             <Link to={'/'}>首頁</Link>
                         </li>
                         <li className="text-xs text-blue-500">
-                            <Link to={'/news'}>最新消息</Link>
+                            <Link to={'/member'}>會員管理</Link>
                         </li>
                     </ul>
                 </div>
