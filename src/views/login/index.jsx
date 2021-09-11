@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { doLogin } from 'api'
 import Toast from '@/views/toast'
 import Captcha from '@/views/login/captcha'
@@ -9,8 +9,6 @@ import eyeClose from '/image/close.png'
 //Toast 不會重複出現
 
 const Login = () => {
-    const history = useHistory()
-    console.log(history)
     const [loginForm, setLoginForm] = useState({
         username: '',
         userErrTip: false,
@@ -89,13 +87,13 @@ const Login = () => {
             return
         } else {
             localStorage.setItem('AUTHENTICATION_TOKEN', res.data.token)
-            history.replace('/')
+            return <Redirect to='/' />
         }
     }
 
     // 跳轉註冊頁
     const goToRegister = () => {
-        history.push('/register')
+        return <Redirect to='/register' />
     }
 
     return (

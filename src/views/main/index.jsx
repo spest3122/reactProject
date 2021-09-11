@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { doAuth } from 'api'
 
 const Main = (props) => {
-    const history = useHistory()
     useEffect(() => {
         async function callAuthWhenRefresh() {
             let res = await doAuth()
             if (!res.data.success) {
                 localStorage.clear()
-                history.replace('/login')
+                return <Redirect to="/login" />
             }
         }
         callAuthWhenRefresh()

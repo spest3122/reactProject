@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import eyeOpen from '/image/open.png'
 import eyeClose from '/image/close.png'
 import { doRegister } from 'api'
 
 const Register = () => {
-    const history = useHistory()
     const [registerForm, setRegisterForm] = useState({
         username: '',
         userErrTip: false,
@@ -49,7 +48,7 @@ const Register = () => {
         return true
     }
     const goToLogin = () => {
-        history.push('/login')
+        return <Redirect to='/login' />
     }
 
     const doSubmit = async () => {
