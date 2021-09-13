@@ -14,22 +14,27 @@ const ErrorComponent = lazy(() => import('@/views/error'))
 const privateRoutes = [
     {
         path: '/',
-        exact: true,
         needAuth: true,
-        component: () => (
-            <MainComponent>
-                <SubMainComponent />
-            </MainComponent>
-        ),
-    },
-    {
-        path: '/member',
-        needAuth: true,
-        component: () => (
-            <MainComponent>
-                <MemberComponent />
-            </MainComponent>
-        ),
+        component: MainComponent,
+        routes: [
+            {
+                path: '/personal',
+                needAuth: true,
+                component: 'personal',
+                routes: [
+                    {
+                        path: '/setting',
+                        needAuth: true,
+                        component: 'setting',
+                    },
+                ],
+            },
+            {
+                path: '/member',
+                needAuth: true,
+                component: 'member',
+            },
+        ],
     },
 ]
 
@@ -45,10 +50,11 @@ const publicRoutes = [
     },
     {
         path: '*',
+        exact: true,
         component: ErrorComponent,
     },
 ]
 
-const routes = [...publicRoutes]
+const routes = [, ...privateRoutes, ...publicRoutes]
 
 export default routes

@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import { doAuth } from 'api'
 
 const Main = (props) => {
-    useEffect(() => {
-        async function callAuthWhenRefresh() {
-            let res = await doAuth()
-            if (!res.data.success) {
-                localStorage.clear()
-                return <Redirect to="/login" />
-            }
-        }
-        callAuthWhenRefresh()
-        return () => {}
-    }, [])
+    console.log(props)
+    // useEffect(() => {
+    //     async function callAuthWhenRefresh() {
+    //         let res = await doAuth()
+    //         if (!res.data.success) {
+    //             localStorage.clear()
+    //             return <Redirect to="/login" />
+    //         }
+    //     }
+    //     callAuthWhenRefresh()
+    // }, [])
     return (
         <main className="flex flex-col">
             <header className="flex justify-between items-center w-full h-11 shadow border-b-2 border-black border-opacity-40 px-4">
@@ -31,7 +31,7 @@ const Main = (props) => {
                     </ul>
                 </div>
             </header>
-            <main className="w-full h-full p-4">{props.children}</main>
+            <main className="w-full h-full p-4"></main>
         </main>
     )
 }

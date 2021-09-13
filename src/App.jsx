@@ -12,17 +12,20 @@ function App() {
         <div className="h-screen">
             <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
-                    {routes.map((item) => (
+                    {routes.map((route) => (
                         <Route
-                            path={item.path}
-                            component={
-                                item.needAuth
-                                    ? auth
-                                        ? item.component
-                                        : ToLogin
-                                    : item.component
+                            path={route.path}
+                            render={
+                                (props) => (
+                                    <route.component {...props} route={route} />
+                                )
+                                // item.needAuth
+                                //     ? auth
+                                //         ? item.component
+                                //         : ToLogin
+                                //     : item.component
                             }
-                            exact={item.exact ? item.exact : false}
+                            exact={route.exact ? route.exact : false}
                         />
                     ))}
                 </Switch>
