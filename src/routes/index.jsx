@@ -1,6 +1,8 @@
 import { lazy } from 'react'
-import MemberComponent from '@/views/main/member'
-import SubMainComponent from '@/views/main/subMain'
+import Member from '@/views/main/member'
+import SubMain from '@/views/main/subMain'
+import Personal from '@/views/main/personal'
+import Setting from '@/views/main/personal/setting'
 const LoginComponent = lazy(() => import('@/views/login'))
 const RegisterComponent = lazy(() => import('@/views/register'))
 const MainComponent = lazy(() => import('@/views/main'))
@@ -20,19 +22,19 @@ const privateRoutes = [
             {
                 path: '/personal',
                 needAuth: true,
-                component: 'personal',
+                component: Personal,
                 routes: [
                     {
                         path: '/setting',
                         needAuth: true,
-                        component: 'setting',
+                        component: Setting,
                     },
                 ],
             },
             {
                 path: '/member',
                 needAuth: true,
-                component: 'member',
+                component: Member,
             },
         ],
     },
@@ -55,6 +57,6 @@ const publicRoutes = [
     },
 ]
 
-const routes = [, ...privateRoutes, ...publicRoutes]
+const routes = [...privateRoutes, ...publicRoutes]
 
 export default routes

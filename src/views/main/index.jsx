@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Switch, Route } from 'react-router-dom'
 import { doAuth } from 'api'
 
 const Main = (props) => {
@@ -31,7 +31,32 @@ const Main = (props) => {
                     </ul>
                 </div>
             </header>
-            <main className="w-full h-full p-4"></main>
+            <aside className="flex">
+                <ul className="flex flex-col">
+                    {props.route.routes.map((item, index) => {
+                        return (
+                            <li className="text-blue-500">
+                                <Link to={item.path}>{item.path}</Link>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </aside>
+            <main className="w-full h-full p-4">
+                <Switch>
+                    {props.route.routes.map((item, index) => {
+                        return (
+                            <Route
+                                path={item.path}
+                                render={(props) => (
+                                    <item.component {...props} />
+                                )}
+                                exact={item.exact ? item.exact : false}
+                            />
+                        )
+                    })}
+                </Switch>
+            </main>
         </main>
     )
 }
