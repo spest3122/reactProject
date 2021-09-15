@@ -3,6 +3,7 @@ import Member from '@/views/main/member'
 import SubMain from '@/views/main/subMain'
 import Personal from '@/views/main/personal'
 import Setting from '@/views/main/personal/setting'
+import Icon from '@/components/icon'
 const LoginComponent = lazy(() => import('@/views/login'))
 const RegisterComponent = lazy(() => import('@/views/register'))
 const MainComponent = lazy(() => import('@/views/main'))
@@ -23,18 +24,23 @@ const privateRoutes = [
                 path: '/personal',
                 needAuth: true,
                 component: Personal,
+                name: '個人資訊管理',
                 routes: [
                     {
                         path: '/setting',
                         needAuth: true,
                         component: Setting,
+                        name: '帳戶設定',
                     },
                 ],
+                icon: <Icon src={'/image/person.png'} />,
             },
             {
                 path: '/member',
                 needAuth: true,
                 component: Member,
+                name: '會員管理',
+                icon: <Icon src={'/image/member.png'} />,
             },
         ],
     },
