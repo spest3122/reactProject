@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 const Menu = ({ list }) => {
-    const renderSideBar = (routes) => {
+    const renderSideBar = (routes, path) => {
         return (
             <ul className="flex flex-col ml-2">
                 {routes.map((item) => {
@@ -10,9 +10,9 @@ const Menu = ({ list }) => {
                             {item?.icon ? item.icon : null}
                             {nestRoutesExist ? item.name + '▼' : ''}
                             {nestRoutesExist ? (
-                                renderSideBar(item.routes)
+                                renderSideBar(item.routes, item.path)
                             ) : (
-                                <Link to={item.path}>{item.name}</Link>
+                                <Link to={path + item.path}>{item.name}</Link>
                             )}
                         </li>
                     )
@@ -20,7 +20,7 @@ const Menu = ({ list }) => {
             </ul>
         )
     }
-    return renderSideBar(list)
+    return renderSideBar(list, '')
 }
 
 export default Menu

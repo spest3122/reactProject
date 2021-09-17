@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
-import { Link, Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import { doAuth } from 'api'
 import Menu from '@/views/main/menu'
+import { renderRoute } from '@/routes/tool'
 
 const Main = (props) => {
     // useEffect(() => {
@@ -14,7 +14,6 @@ const Main = (props) => {
     //     }
     //     callAuthWhenRefresh()
     // }, [])
-
     return (
         <main className="flex flex-col h-full">
             <header className="flex justify-between items-center w-full h-11 shadow border-b-2 border-black border-opacity-40 px-4">
@@ -28,19 +27,7 @@ const Main = (props) => {
                     <Menu list={props.route.routes} />
                 </aside>
                 <section className="flex">
-                    <Switch>
-                        {props.route.routes.map((item, index) => {
-                            return (
-                                <Route
-                                    path={item.path}
-                                    render={(props) => (
-                                        <item.component {...props} />
-                                    )}
-                                    exact={item.exact ? item.exact : false}
-                                />
-                            )
-                        })}
-                    </Switch>
+                    <Switch>{renderRoute(props.route.routes)}</Switch>
                 </section>
             </main>
         </main>
