@@ -8,7 +8,6 @@ const doLogin = (data) => {
         url: '/api/login',
         data: data,
         method: 'post',
-        headers: {},
     })
 }
 
@@ -18,7 +17,6 @@ const doRegister = (data) => {
         url: '/api/register',
         data: data,
         method: 'post',
-        headers: {},
     })
 }
 
@@ -28,9 +26,6 @@ const doAuth = () => {
         url: '/api/user',
         data: {},
         method: 'get',
-        headers: {
-            Authorization: localStorage.getItem('Authorization'),
-        },
     })
 }
 
@@ -40,21 +35,15 @@ const updateUserName = () => {
         url: '/api/users',
         data: {},
         method: 'put',
-        headers: {
-            Authorization: localStorage.getItem('Authorization'),
-        },
     })
 }
 
 //取得使用者名稱
-const getUserName = () => {
+const getUserName = (data) => {
     return helper({
         url: '/api/users',
-        data: {},
+        data: data,
         method: 'get',
-        headers: {
-            Authorization: localStorage.getItem('Authorization'),
-        },
     })
 }
 
@@ -64,9 +53,6 @@ const uploadUserImage = () => {
         url: '/api/users/uploadBase64Picture',
         data: {},
         method: 'post',
-        headers: {
-            Authorization: localStorage.getItem('Authorization'),
-        },
     })
 }
 

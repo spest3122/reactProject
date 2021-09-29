@@ -86,7 +86,6 @@ const Login = () => {
             }))
             return
         } else {
-            localStorage.setItem('AUTHENTICATION_TOKEN', res.data.token)
             return <Redirect to="/" />
         }
     }

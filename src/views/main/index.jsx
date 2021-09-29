@@ -22,11 +22,11 @@ const Main = (props) => {
                 </div>
                 <div className="flex linkList"></div>
             </header>
-            <main className="h-full flex">
+            <main className="flex h-full">
                 <aside className="flex h-full border-r-2 border-black border-black border-opacity-40 p-6">
                     <Menu list={props.route.routes} />
                 </aside>
-                <section className="flex">
+                <section className="flex-auto">
                     <Switch>{renderRoute(props.route.routes)}</Switch>
                 </section>
             </main>
