@@ -1,6 +1,8 @@
 import { lazy } from 'react'
 import Icon from '@/components/icon'
 const Member = lazy(() => import('@/views/main/member'))
+const MemberColumn = lazy(() => import('@/views/main/member/column'))
+const MemberRow = lazy(() => import('@/views/main/member/row'))
 const SubMain = lazy(() => import('@/views/main/subMain'))
 const Personal = lazy(() => import('@/views/main/personal'))
 const Setting = lazy(() => import('@/views/main/personal/setting'))
@@ -55,9 +57,24 @@ const routes = [
             {
                 path: '/member',
                 needAuth: true,
-                exact: true,
                 component: Member,
                 name: '會員管理',
+                routes: [
+                    {
+                        path: '/column',
+                        needAuth: true,
+                        exact: true,
+                        component: MemberColumn,
+                        name: '列表式',
+                    },
+                    {
+                        path: '/row',
+                        needAuth: true,
+                        exact: true,
+                        component: MemberRow,
+                        name: '表格式',
+                    },
+                ],
                 icon: <Icon src={'/image/member.png'} />,
             },
             {
