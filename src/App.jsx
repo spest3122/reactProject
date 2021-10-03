@@ -10,7 +10,7 @@ function App() {
     const auth = localStorage.getItem('AUTHENTICATION_TOKEN')
 
     return (
-        <div className="h-screen">
+        <div className="h-screen overflow-hidden">
             <Suspense fallback={<div>Loading...</div>}>
                 <Switch>{renderRoute(routes)}</Switch>
             </Suspense>
