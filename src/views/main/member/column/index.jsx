@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { getUserName } from 'api'
 
 const Column = () => {
@@ -70,7 +71,7 @@ const Column = () => {
                             <td>{item.username}</td>
                             <td>{item.role}</td>
                             <td>
-                                <a>詳細</a>
+                                <Link to="/member/detail">詳情</Link>
                             </td>
                         </tr>
                     ))}

@@ -3,6 +3,7 @@ import Icon from '@/components/icon'
 const Member = lazy(() => import('@/views/main/member'))
 const MemberColumn = lazy(() => import('@/views/main/member/column'))
 const MemberRow = lazy(() => import('@/views/main/member/row'))
+const MemberDetail = lazy(() => import('@/views/main/member/detail'))
 const SubMain = lazy(() => import('@/views/main/subMain'))
 const Personal = lazy(() => import('@/views/main/personal'))
 const Setting = lazy(() => import('@/views/main/personal/setting'))
@@ -73,6 +74,14 @@ const routes = [
                         exact: true,
                         component: MemberRow,
                         name: '表格式',
+                    },
+                    {
+                        path: '/detail',
+                        needAuth: true,
+                        exact: true,
+                        hidden: true,
+                        component: MemberDetail,
+                        name: '會員詳細',
                     },
                 ],
                 icon: <Icon src={'/image/member.png'} />,

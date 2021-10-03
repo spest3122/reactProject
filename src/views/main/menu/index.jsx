@@ -5,6 +5,9 @@ const Menu = ({ list }) => {
             <ul className="flex flex-col ml-2">
                 {routes.map((item) => {
                     let nestRoutesExist = item?.routes
+                    if (item.hidden) {
+                        return null
+                    }
                     return (
                         <li className="p-1" key={item.path}>
                             {item?.icon ? item.icon : null}
