@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import { debounce } from 'lodash'
 import { Link } from 'react-router-dom'
 import { getUserName } from 'api'
 import './styles.css'
@@ -11,9 +12,15 @@ const Row = () => {
         size: 10,
         pageList: [],
     })
+    const scrollRef = useRef(null)
+
     useEffect(() => {
         getUserList()
     }, [pageConfig.page])
+
+    // useLayoutEffect(() => {
+    //     scrollRef.current.scrollTop = 156
+    // }, [list])
 
     const getUserList = async () => {
         let res = await getUserName({
@@ -32,12 +39,29 @@ const Row = () => {
             total: totalNumber,
             pageList: pageList,
         }))
-        setList(listData)
+        setList((prev) => [...prev, ...listData])
     }
+    const callNextUserList = debounce((e) => {
+        if (
+            e.target.scrollTop > 150 &&
+            pageConfig.page !== Math.ceil(pageConfig.total / 10) - 1
+        ) {
+            let page = pageConfig.page + 1
+            setPageConfig((prev) => ({ ...prev, page: page }))
+        }
+    }, 300)
+    const scrollHandle = (e) => {
+        callNextUserList(e)
+    }
+
     return (
         <main className="ml-2 mt-4 h-full">
             <h1>會員管理(表格式)</h1>
-            <section className="mt-4 pl-4 pr-4 h-full overflow-y-auto hiddenScroll">
+            <section
+                className="mt-4 pl-4 pr-4 h-5/6 overflow-y-auto hiddenScroll"
+                ref={scrollRef}
+                onScroll={scrollHandle}
+            >
                 {list.map((item, index) => (
                     <div
                         key={'row' + index}
@@ -49,9 +73,9 @@ const Row = () => {
                                 |
                             </div>
                             <p>帳號 : {item.username}</p>
-                            <siv className="pl-4 pr-4 w-px flex items-center">
+                            <div className="pl-4 pr-4 w-px flex items-center">
                                 |
-                            </siv>
+                            </div>
                             <p>角色 : {item.role}</p>
                         </div>
                         <div>
