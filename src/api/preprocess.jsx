@@ -6,7 +6,7 @@ import axios from 'axios'
  * 2. 錯誤能直接返回提示的component
  */
 
-const outerUrl = 'https://l8-upgrade-apis.vercel.app'
+const outerUrl = 'https://l8-upgrade-apis.herokuapp.com'
 
 axios.interceptors.response.use(
     function (response) {

@@ -69,7 +69,7 @@ const Captcha = (props) => {
     }, [result])
 
     return (
-        <div className="absolute h-full w-full z-index flex justify-center items-center bg-gray-300	">
+        <div className="absolute h-full w-full flex justify-center items-center bg-gray-300	">
             <div className="captcha">
                 <div className="captchaScreen" ref={captchaRef}>
                     {threeNumber.map((item) => (

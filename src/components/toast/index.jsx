@@ -1,33 +1,22 @@
-import { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
 let delay = 2
 const Toast = (props) => {
     let { status, msg } = props
-    const [show, setShow] = useState(false)
-    useEffect(() => {
-        setShow(true)
-        let showDialog = setTimeout(() => setShow(false), delay * 1000)
-        return () => {
-            clearTimeout(showDialog)
-        }
-    }, [status])
 
     const matchColor = (color) => {
         switch (color) {
             case 'success':
                 return 'bg-green-500'
-            case 'fail':
+            case 'error':
                 return 'bg-red-600'
             default:
                 return 'bg-blue-100'
         }
     }
-
     return (
         <div
-            className={`fixed z-20 top-3 max-w-md items-center flex p-3 rounded-full border-2 ${
-                show ? 'visible' : 'invisible'
-            }`}
+            className={`fixed z-50 top-3 max-w-md flex items-center p-3 rounded-full border-2 bg-white`}
         >
             <div
                 className={`${matchColor(status)} w-14 h-14 rounded-full`}
@@ -37,4 +26,19 @@ const Toast = (props) => {
     )
 }
 
-export default Toast
+const createToast = () => {
+    const createAndDestory = (msg, status) => {
+        let toast = document.getElementById('toast')
+        ReactDOM.render(<Toast msg={msg} status={status} />, toast)
+        setTimeout(() => {
+            ReactDOM.render(<></>, toast)
+        }, 2 * 1000)
+    }
+
+    return {
+        error: (msg) => createAndDestory(msg, 'error'),
+        success: (msg) => createAndDestory(msg, 'success'),
+    }
+}
+
+export default createToast()

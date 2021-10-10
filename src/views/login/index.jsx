@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { doLogin } from 'api'
 import Toast from '@/components/toast'
@@ -16,27 +16,12 @@ const Login = () => {
         psdErrTip: false,
     })
     const [pwdOpen, setPwdOpen] = useState(false)
-    const [toastStatus, setToastStatus] = useState({
-        msg: '',
-        status: false,
-        color: '',
-    })
     const [captchaStatus, setCaptchaStatus] = useState(0) //0未驗證 1驗證中/驗證不過 2驗證通過
     const captchaVerifyMethod = (val) => {
         if (val === 2) {
-            setToastStatus((prev) => ({
-                ...prev,
-                msg: '驗證通過',
-                status: true,
-                color: 'success',
-            }))
+            Toast.success('驗證通過')
         } else if (val === 1) {
-            setToastStatus((prev) => ({
-                ...prev,
-                msg: '驗證失敗，請重新驗證',
-                status: true,
-                color: 'fail',
-            }))
+            Toast.error('驗證失敗，請重新驗證')
         }
         setCaptchaStatus(val)
     }
@@ -78,12 +63,7 @@ const Login = () => {
             password: loginForm.password,
         })
         if (!res.data.success) {
-            setToastStatus((prev) => ({
-                ...prev,
-                msg: res.data.message,
-                status: true,
-                color: 'fail',
-            }))
+            Toast.error(res.data.message)
             return
         } else {
             return <Redirect to="/" />
@@ -184,7 +164,6 @@ const Login = () => {
                     </div>
                 </form>
             </div>
-            <Toast status={toastStatus.color} msg={toastStatus.msg} />
             {captchaStatus === 1 ? (
                 <Captcha endVerify={captchaVerifyMethod} />
             ) : (

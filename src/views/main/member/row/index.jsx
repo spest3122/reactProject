@@ -18,9 +18,9 @@ const Row = () => {
         getUserList()
     }, [pageConfig.page])
 
-    // useLayoutEffect(() => {
-    //     scrollRef.current.scrollTop = 156
-    // }, [list])
+    useEffect(() => {
+        scrollRef.current.scrollTop = 156
+    }, [list])
 
     const getUserList = async () => {
         let res = await getUserName({
