@@ -32,7 +32,7 @@ const createToast = () => {
         ReactDOM.render(<Toast msg={msg} status={status} />, toast)
         setTimeout(() => {
             ReactDOM.render(<></>, toast)
-        }, 2 * 1000)
+        }, delay * 1000)
     }
 
     return {

@@ -10,13 +10,22 @@ const enumMode = ['>', '<']
 
 const threeRandomNumber = (mode) => {
     /**
-     * 未解問題
-     * 1. 重複數字
+     * {
+     *   press: true, //按過沒按過
+     *   x: 0,
+     *   y: 0,
+     *   rNumber: 22 //隨機數字
+     * }
+     * 位置的機制
+     * 1. 位置不重複
+     * 2. 給予的值不超過當前clientHeight&clientWidth範圍
      */
     let randomNumberAry = []
     let fixedNumber = 99
     for (let i = 0; i < 3; i++) {
-        randomNumberAry.push(Math.round(Math.random() * fixedNumber))
+        randomNumberAry.push({
+            rNumber: Math.round(Math.random() * fixedNumber),
+        })
     }
     return randomNumberAry
 }
@@ -72,14 +81,16 @@ const Captcha = (props) => {
         <div className="absolute h-full w-full flex justify-center items-center bg-gray-300	">
             <div className="captcha">
                 <div className="captchaScreen" ref={captchaRef}>
-                    {threeNumber.map((item) => (
+                    {threeNumber.map((item, index) => (
                         <div
                             className="numberPlace"
-                            style={{ top: (item + 10) * 2, left: item * 2 }}
-                            key={item}
-                            onClick={() => setResult((prev) => [...prev, item])}
+                            style={{ top: item.x, left: item.y }}
+                            key={'number' + index}
+                            onClick={() =>
+                                setResult((prev) => [...prev, item.rNumber])
+                            }
                         >
-                            {item}
+                            {item.rNumber}
                         </div>
                     ))}
                 </div>
