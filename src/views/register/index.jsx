@@ -48,7 +48,7 @@ const Register = () => {
         return true
     }
     const goToLogin = () => {
-        return <Redirect to='/login' />
+        return <Redirect to="/login" />
     }
 
     const doSubmit = async () => {
@@ -63,7 +63,6 @@ const Register = () => {
         if (!res.data.success) {
             //TODO 待處理
         } else {
-            history.replace('/')
         }
     }
     return (

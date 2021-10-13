@@ -25,6 +25,9 @@ const threeRandomNumber = (mode) => {
     for (let i = 0; i < 3; i++) {
         randomNumberAry.push({
             rNumber: Math.round(Math.random() * fixedNumber),
+            press: false,
+            x: 10 * (i + 1),
+            y: 20 * (i + 1),
         })
     }
     return randomNumberAry
@@ -51,13 +54,15 @@ const Captcha = (props) => {
     }
     //校驗
     const verifyCode = () => {
-        const answer = threeNumber.sort((a, b) => {
-            if (randomMode === '>') {
-                return b - a
-            } else {
-                return a - b
-            }
-        })
+        const answer = threeNumber
+            .map((item) => item.rNumber)
+            .sort((a, b) => {
+                if (randomMode === '>') {
+                    return b - a
+                } else {
+                    return a - b
+                }
+            })
         const isMatch = result.every((item, index) => item === answer[index])
         if (isMatch) {
             endVerify(2)
@@ -84,7 +89,7 @@ const Captcha = (props) => {
                     {threeNumber.map((item, index) => (
                         <div
                             className="numberPlace"
-                            style={{ top: item.x, left: item.y }}
+                            style={{ top: item.x + 20, left: item.y + 20 }}
                             key={'number' + index}
                             onClick={() =>
                                 setResult((prev) => [...prev, item.rNumber])

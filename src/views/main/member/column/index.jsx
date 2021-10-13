@@ -1,56 +1,17 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getUserName } from 'api'
+import { useContextSelector } from 'use-context-selector'
+import { MemberContext } from '../context'
 
 const Column = () => {
-    const [list, setList] = useState([])
-    const [pageConfig, setPageConfig] = useState({
-        total: 0,
-        page: 0,
-        size: 10,
-        pageList: [],
-    })
-    useEffect(() => {
-        getUserList()
-    }, [pageConfig.page])
-
-    const getUserList = async () => {
-        let res = await getUserName({
-            page: pageConfig.page,
-            size: pageConfig.size,
-            pageList: [],
-        })
-        let listData = res.data.data.content
-        let totalNumber = res.data.data.total
-        let pageList = Array.from(
-            { length: Math.ceil(totalNumber / 10) },
-            (_, i) => i + 1
-        )
-        setPageConfig((prev) => ({
-            ...prev,
-            total: totalNumber,
-            pageList: pageList,
-        }))
-        setList(listData)
-    }
-
-    const changePage = (move) => {
-        let page = pageConfig.page
-        let list = pageConfig.pageList
-        if (move === 'next') {
-            page += 1
-        } else if (move === 'prev') {
-            page -= 1
-        } else {
-            page = move
-        }
-
-        if (page >= list[list.length - 1] || page < 0) {
-            return
-        }
-
-        setPageConfig((prev) => ({ ...prev, page: page }))
-    }
+    const list = useContextSelector(MemberContext, (data) => data.list)
+    const pageConfig = useContextSelector(
+        MemberContext,
+        (data) => data.pageConfig
+    )
+    const changePage = useContextSelector(
+        MemberContext,
+        (data) => data.changePage
+    )
 
     return (
         <main className="ml-4 mr-4 mt-4">

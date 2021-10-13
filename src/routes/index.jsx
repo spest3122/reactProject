@@ -12,10 +12,6 @@ const RegisterComponent = lazy(() => import('@/views/register'))
 const MainComponent = lazy(() => import('@/views/main'))
 const ErrorComponent = lazy(() => import('@/views/error'))
 
-/**
- * 需求說明: 需有token才能使用私有路由，私有路由內又分需要最高權限才能使用該路由
- */
-
 const routes = [
     {
         path: '/404',
