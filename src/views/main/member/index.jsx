@@ -1,7 +1,8 @@
 import { renderRoute } from '@/routes/tool'
 import { Switch, Link } from 'react-router-dom'
 import { MemberContext } from './context'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { debounce } from 'lodash'
 import { getUserName } from 'api'
 
 const Member = (props) => {
@@ -11,6 +12,8 @@ const Member = (props) => {
         page: 0,
         size: 10,
         pageList: [],
+        scrollStop: 0,
+        mode: 1, //list
     })
     useEffect(() => {
         getUserList()
@@ -33,7 +36,11 @@ const Member = (props) => {
             total: totalNumber,
             pageList: pageList,
         }))
-        setList(listData)
+        if (pageConfig.mode === 2) {
+            setList((prev) => [...prev, ...listData])
+        } else if (pageConfig.mode === 1) {
+            setList(listData)
+        }
     }
 
     const changePage = (move) => {
@@ -46,15 +53,39 @@ const Member = (props) => {
         } else {
             page = move
         }
-
         if (page >= list[list.length - 1] || page < 0) {
             return
         }
+        setPageConfig((prev) => ({ ...prev, page: page, mode: 1 }))
+    }
 
-        setPageConfig((prev) => ({ ...prev, page: page }))
+    const callNextUserList = debounce((e, pos) => {
+        if (
+            e.target.scrollTop > 150 &&
+            pageConfig.page !== Math.ceil(pageConfig.total / 10) - 1
+        ) {
+            let page = pageConfig.page + 1
+            setPageConfig((prev) => ({
+                ...prev,
+                page: page,
+                scrollStop: pos,
+                mode: 2,
+            }))
+        } else {
+            setPageConfig((prev) => ({
+                ...prev,
+                scrollStop: pos,
+                mode: 2,
+            }))
+        }
+    }, 300)
+    const scrollHandle = (e) => {
+        callNextUserList(e, e.target.scrollTop)
     }
     return (
-        <MemberContext.Provider value={{ list, changePage, pageConfig }}>
+        <MemberContext.Provider
+            value={{ list, changePage, pageConfig, scrollHandle }}
+        >
             <Switch>{renderRoute(props.route.routes, props.route.path)}</Switch>
         </MemberContext.Provider>
     )

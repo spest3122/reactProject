@@ -1,58 +1,23 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react'
-import { debounce } from 'lodash'
 import { Link } from 'react-router-dom'
-import { getUserName } from 'api'
+import { useRef, useEffect } from 'react'
 import './styles.css'
+import { useContextSelector } from 'use-context-selector'
+import { MemberContext } from '../context'
 
 const Row = () => {
-    const [list, setList] = useState([])
-    const [pageConfig, setPageConfig] = useState({
-        total: 0,
-        page: 0,
-        size: 10,
-        pageList: [],
-    })
     const scrollRef = useRef(null)
-
+    const list = useContextSelector(MemberContext, (data) => data.list)
+    const pageConfig = useContextSelector(
+        MemberContext,
+        (data) => data.pageConfig
+    )
+    const scrollHandle = useContextSelector(
+        MemberContext,
+        (data) => data.scrollHandle
+    )
     useEffect(() => {
-        getUserList()
-    }, [pageConfig.page])
-
-    useEffect(() => {
-        scrollRef.current.scrollTop = 156
+        scrollRef.current.scrollTop = pageConfig.scrollStop
     }, [list])
-
-    const getUserList = async () => {
-        let res = await getUserName({
-            page: pageConfig.page,
-            size: pageConfig.size,
-            pageList: [],
-        })
-        let listData = res.data.data.content
-        let totalNumber = res.data.data.total
-        let pageList = Array.from(
-            { length: Math.ceil(totalNumber / 10) },
-            (_, i) => i + 1
-        )
-        setPageConfig((prev) => ({
-            ...prev,
-            total: totalNumber,
-            pageList: pageList,
-        }))
-        setList((prev) => [...prev, ...listData])
-    }
-    const callNextUserList = debounce((e) => {
-        if (
-            e.target.scrollTop > 150 &&
-            pageConfig.page !== Math.ceil(pageConfig.total / 10) - 1
-        ) {
-            let page = pageConfig.page + 1
-            setPageConfig((prev) => ({ ...prev, page: page }))
-        }
-    }, 300)
-    const scrollHandle = (e) => {
-        callNextUserList(e)
-    }
 
     return (
         <main className="ml-2 mt-4 h-full">
